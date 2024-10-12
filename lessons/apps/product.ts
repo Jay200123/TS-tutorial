@@ -1,5 +1,5 @@
 let productId = 1;
-type Brand = "Samsung" | "Oppo" | "Vivo";
+type Brand = "Samsung" | "Oppo" | "Vivo" | "Xiaomi";
 
 type Products = {
     _id: number;
@@ -9,37 +9,50 @@ type Products = {
 }
 
 type List = Array<Products>;
-const lists: List = [];
+const lists: List = [
+    {
+        _id: productId++,
+        name: 'Samsung Galaxy S21',
+        price: 999.99,
+        brand: 'Samsung',
+    },
+    {
+        _id: productId++,
+        name: 'Oppo A74',
+        price: 499.99,
+        brand: 'Oppo',
+    },
+    {
+        _id: productId++,
+        name: 'Vivo V21',
+        price: 399.99,
+        brand: 'Vivo',
+    }
+];
 
 function addProduct(product: Products) {
     return lists.push(product);
 }
 
-const newProduct1: Products = {
-    _id: productId++,
-    name: 'Samsung Galaxy S21',
-    price: 999.99,
-    brand: 'Samsung',
-}
-
-const newProduct2: Products = {
-    _id: productId++,
-    name: 'Oppo A74',
-    price: 499.99,
-    brand: 'Oppo',
-}
-
 const newProduct3: Products = {
     _id: productId++,
-    name: 'Vivo V21',
-    price: 399.99,
-    brand: 'Vivo',
+    name: 'Xiaomi Redmi Note 10',
+    price: 299.99,
+    brand: 'Xiaomi',
 }
 
-
-addProduct(newProduct1);
-addProduct(newProduct2);
 addProduct(newProduct3);
+
+const products = lists.map((p)=> p?._id);
+
+console.log(products);
+
+function findNewProducts(products: Array<number>) {
+    return lists.filter((p) => products.includes(p._id));   
+}
+
+const productResults = findNewProducts(products);
+console.log(productResults);
 
 
 type Cart = Array<Products>;
@@ -51,7 +64,7 @@ function findProduct(identifier: IDENTIFIER) {
     return lists.find((p) => p._id === identifier || p?.name === identifier);
 }
 
-const result = findProduct(newProduct1?.name);
+const result = findProduct(newProduct3?.name);
 
 function addToCart(identifier: IDENTIFIER) {
     const addedProduct = lists.find((p) => p._id === identifier || p?.name === identifier);
@@ -64,7 +77,7 @@ function addToCart(identifier: IDENTIFIER) {
 
 }
 
-addToCart(newProduct1?._id);
+addToCart(newProduct3?._id);
 
 if (!cart || cart.length == 0) {
     throw new Error("Cart is empty");
