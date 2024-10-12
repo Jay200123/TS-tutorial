@@ -94,4 +94,4 @@ console.log(placedOrder);
 console.log(orderQue);
 
 
-console.log(menu)
+console.log(menu);
