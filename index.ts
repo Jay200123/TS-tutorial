@@ -1,1 +1,1 @@
-console.log("testing grounds for typescript")
+console.log('Hello, TypeScript!');
