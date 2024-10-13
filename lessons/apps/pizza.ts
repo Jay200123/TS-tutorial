@@ -1,14 +1,14 @@
-let pizzaId =1;
+let pizzaId = 1;
 
 type Pizza = {
     _id: number;
     name: string;
-    price: number;  
+    price: number;
 }
 
-type Menu = Array<Pizza>;   
+type Menu = Array<Pizza>;
 
-const menu: Menu  = [
+const menu: Menu = [
     {
         _id: pizzaId++,
         name: "Hawaiian",
@@ -26,22 +26,22 @@ const menu: Menu  = [
     }
 ];
 
-type ID = number;   
+type ID = number;
 type Cash = number
 
 let cashInRegister: Cash = 100;
 let orderId: ID = 1;
 
-type STATUS = 'pending' | 'completed';  
+type STATUS = 'pending' | 'completed';
 
 type Que = {
-    _id:ID;
+    _id: ID;
     pizza: Pizza;
     status: STATUS;
 }
 
 type Order = Array<Que>;
-const orderQue: Order = []; 
+const orderQue: Order = [];
 
 
 function addPizzaToMenu(pizza: Pizza) {
@@ -51,15 +51,27 @@ function addPizzaToMenu(pizza: Pizza) {
 
 const newPizza: Pizza = {
     _id: pizzaId++,
-    name: 'Spinach and Feta',   
-    price: 15.99,    
+    name: 'Spinach and Feta',
+    price: 15.99,
 }
 
-addPizzaToMenu(newPizza); 
+addPizzaToMenu(newPizza);
+
+type PizzaIdentifier = string | number;
+
+export default function getPizzaDetails(identifier: PizzaIdentifier): Pizza | undefined {
+    if (typeof identifier === 'number') {
+        return menu.find(pizza => pizza._id === identifier);
+    } else if (typeof identifier === 'string') {
+        return menu.find(pizza => pizza.name.toLowerCase() === identifier.toLowerCase());
+    } else {
+        throw new Error('Invalid input');
+        return;
+    }
+}
 
 
-
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string): Pizza | Que | undefined {
     const selectedPizza = menu.find(pizza => pizza.name === pizzaName);
 
     if (!selectedPizza) {
@@ -78,18 +90,18 @@ function placeOrder(pizzaName: string) {
 
 }
 
-function completeOrder(orderId: ID) {
+function completeOrder(orderId: ID): Order | undefined {
     const order = orderQue.find(order => order._id === orderId);
-     if (!order) {
+    if (!order) {
         console.log('Order not found');
         return;
     }
     order.status = 'completed';
     console.log('Order completed');
-}  
+}
 
 const placedOrder = placeOrder('Hawaiian');
-completeOrder(placedOrder._id); 
+completeOrder(placedOrder._id);
 console.log(placedOrder);
 console.log(orderQue);
 
