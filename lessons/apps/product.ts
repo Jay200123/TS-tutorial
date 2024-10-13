@@ -43,12 +43,12 @@ const newProduct3: Products = {
 
 addProduct(newProduct3);
 
-const products = lists.map((p)=> p?._id);
+const products = lists.map((p) => p?._id);
 
 console.log(products);
 
 function findNewProducts(products: Array<number>) {
-    return lists.filter((p) => products.includes(p._id));   
+    return lists.filter((p) => products.includes(p._id));
 }
 
 const productResults = findNewProducts(products);
@@ -60,14 +60,15 @@ const cart: Cart = [];
 
 type IDENTIFIER = number | string;
 
-function findProduct(identifier: IDENTIFIER) {
-    return lists.find((p) => p._id === identifier || p?.name === identifier);
-}
+// function findProduct(identifier: IDENTIFIER) {
+//     return lists.find((p) => p._id === identifier || p?.name === identifier);
+// }
 
-const result = findProduct(newProduct3?.name);
+// const result = findProduct(newProduct3?.name);
 
 function addToCart(identifier: IDENTIFIER) {
     const addedProduct = lists.find((p) => p._id === identifier || p?.name === identifier);
+    console.log(addedProduct);
 
     if (!addProduct) {
         throw new Error("Product not found")
@@ -77,8 +78,8 @@ function addToCart(identifier: IDENTIFIER) {
 
 }
 
-addToCart(newProduct3?._id);
-
+const orderedCart = addToCart(newProduct3?._id);
+console.log(orderedCart);
 if (!cart || cart.length == 0) {
     throw new Error("Cart is empty");
 }
