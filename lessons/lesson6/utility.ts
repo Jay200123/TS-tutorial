@@ -7,12 +7,7 @@ type Student = {
     grade: number,  
 }
 
-type Updates = {
-    id?: number,
-    name?: string,
-    age?: number,
-    grade?: number,      
-}
+type Updates =  Partial<Student>;    
 
 type Attendance = Array<Student>;
 const students: Attendance = [
