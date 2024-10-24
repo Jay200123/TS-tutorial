@@ -37,3 +37,5 @@ userRoutes.forEach((route) => {
     const { method, path = "", handler } = route;
     router[method as any](path, handler);
 });
+
+export default router;
