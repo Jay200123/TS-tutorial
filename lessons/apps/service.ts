@@ -28,7 +28,7 @@ const choices: Choice = [
 
 const serviceIds = choices.map((s) => s._id);
 
-const findServices = (service: Array<number>) => {
+const findServices = (service: Array<number>): Service[] => {
     return choices.filter((s) => service.includes(s._id));
 }
 
@@ -62,11 +62,11 @@ type ServiceQue = Array<ServiceOrder>;
 const serviceOrders: ServiceQue = [];
 
 
-const serviceCheckout = (cart: ServiceCart)=>{
-    const serviceTotal = cart.reduce((total, service) => total + service.price, 0); 
+const serviceCheckout = (cart: ServiceCart) => {
+    const serviceTotal = cart.reduce((total, service) => total + service.price, 0);
 
     const serviceOrder: ServiceOrder = {
-        _id: serviceOrderId ++,
+        _id: serviceOrderId++,
         cart: cart,
         status: 'pending',
         amount: serviceTotal,
@@ -78,7 +78,7 @@ const serviceCheckout = (cart: ServiceCart)=>{
 }
 
 const availService = serviceCheckout(serviceResult);
-console.log(availService);   
+console.log(availService);
 
 const CompleteService = (orderId: number) => {
     const serviceOrder = serviceOrders.find((s) => s._id === orderId);
