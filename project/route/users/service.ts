@@ -1,5 +1,4 @@
 import User from "./model";
-import { Request, Response } from "express";
 import { IUser } from "../../interface/index";
 
 const getAll = async () => {
@@ -14,7 +13,7 @@ const create = async (body: IUser) => {
     return await User.create([body]);
 }
 
-const updateById = async (id: number | string, body: IUser) => {
+const updateById = async (id: number | string, body: Partial<IUser>) => {
     return await User.findByIdAndUpdate(id, body, {
         new: true,
         runValidators: true,
@@ -25,7 +24,7 @@ const deleteById = async (id: number | string) => {
     return await User.findByIdAndDelete(id);
 }
 
-export default {
+export {
     getAll,
     getById,
     create,
