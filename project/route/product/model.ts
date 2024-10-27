@@ -17,7 +17,14 @@ const productSchema: Schema<IProduct> = new Schema({
     quantity: {
         type: Number,
         required: true
-    }
+    },
+    image: [
+        {
+            public_id: String,
+            url: String,
+            originalname: String
+        }
+    ],
 
 })
 
