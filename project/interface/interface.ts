@@ -17,13 +17,15 @@ interface IUser extends Document {
     name: string,
     age: number,
     section: string,
+    image: Image,
 }
 
 interface IProduct extends Document {
     product_name: string,
     price: number,
     description: string,
-    quantity: number
+    quantity: number,
+    image: Image,
 }
 
 export {
