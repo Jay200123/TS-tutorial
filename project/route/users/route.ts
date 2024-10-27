@@ -1,9 +1,8 @@
 import userController from "./controller";
 import { METHOD, PATH } from "../../constants/index";
-import { Router, Route } from "../../interface/middleware";
+import { Router, Route } from "../../interface/type";
 
 const router = Router();
-
 
 const userRoutes: Route[] = [
     {
