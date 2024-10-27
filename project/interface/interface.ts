@@ -6,6 +6,13 @@ interface MainRoute {
     route: Router
 }
 
+interface Image {
+    public_id: string;
+    url: string;
+    originalname: string;
+}
+
+
 interface IUser extends Document {
     name: string,
     age: number,
@@ -23,4 +30,5 @@ export {
     MainRoute,
     IUser,
     IProduct,
+    Image,
 } 
