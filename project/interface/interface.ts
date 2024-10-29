@@ -17,7 +17,7 @@ interface IUser extends Document {
     name: string,
     age: number,
     section: string,
-    image: Image,
+    image: Image[],
 }
 
 interface IProduct extends Document {
@@ -25,7 +25,20 @@ interface IProduct extends Document {
     price: number,
     description: string,
     quantity: number,
-    image: Image,
+    image: Image[],
+}
+
+interface DataType {
+    id: string,
+    [key: string]: any;
+}
+
+interface DecodeToken {
+    _id: string;
+}
+
+interface AuthenticatedRequest extends Request {
+    user?: any
 }
 
 export {
@@ -33,4 +46,7 @@ export {
     IUser,
     IProduct,
     Image,
+    DataType,
+    DecodeToken,
+    AuthenticatedRequest
 } 
