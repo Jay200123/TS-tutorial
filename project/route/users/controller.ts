@@ -1,6 +1,7 @@
 import * as userService from './service';
-import { ErrorHandler, SuccessHandler } from '../../utils';
+import { ErrorHandler, SuccessHandler, upload, uploadImage } from '../../utils';
 import { NextFunction, Request, Response } from '../../interface/index';
+import { cloudinary } from '../../config';
 
 
 const getAllUsers = async (req: Request, res: Response) => {
@@ -14,16 +15,29 @@ const getUserById = async (req: Request, res: Response) => {
 }
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const data = await userService.create(req.body);
+    upload.array("image")
+    const image = await uploadImage(req.files as Express.Multer.File[], []);
+    const data = await userService.create(
+        {
+            ...req.body,
+            image: image
+        }
+    );
     return SuccessHandler(res, "Data Created", data);
 }
 
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    upload.array("image")
+    const user = await userService.getById(req.params.id)
+    const oldImage = Array.isArray(user?.image) ? user.image.map((i) => i?.public_id) : [];
+
+    const image = await uploadImage(req.files as Express.Multer.File[], oldImage);
     const data = await userService.updateById(
         req.params.id,
         {
-            ...req.body
+            ...req.body,
+            image: image
         }
     )
 
@@ -33,7 +47,12 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteUser = async (req: Request, res: Response) => {
     const data = await userService.deleteById(req.params.id);
-    return !data ? new ErrorHandler('No data found', 404) : SuccessHandler(res, "Data Deleted", data);
+    const userImage = Array.isArray(data?.image) ? data.image.map((i) => i?.public_id) : [];
+    await cloudinary.api.delete_resources(userImage)
+
+    return !data
+        ? new ErrorHandler('No data found', 404)
+        : SuccessHandler(res, "Data Deleted", data);
 }
 
 export default {
