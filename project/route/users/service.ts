@@ -24,10 +24,15 @@ const deleteById = async (id: number | string) => {
     return await User.findByIdAndDelete(id);
 }
 
+const getByEmail = async (email: string) => {
+    return await User.findOne({ email });
+}
+
 export {
     getAll,
     getById,
     create,
     updateById,
-    deleteById
+    deleteById,
+    getByEmail
 }
