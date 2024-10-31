@@ -1,7 +1,7 @@
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { v4 as uuidv4 } from 'uuid';
 import multer from 'multer';
-import { cloudinary } from '../config/index';
+import { cloudinary } from '../config';
 import { Image } from '../interface';
 
 
@@ -23,7 +23,7 @@ const uploadImage = async (files: Express.Multer.File[], oldImagePublicIds: stri
     if (publicId) await cloudinary.uploader.destroy(publicId);
   }
 
-  const uploadPromises = files.map(file =>
+  const uploadPromises = files.map((file) =>
     cloudinary.uploader
       .upload(file.path, { public_id: file.filename })
       .then(result => ({
