@@ -1,5 +1,5 @@
 import { Router } from "./type";
-import { Document } from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 interface MainRoute {
     path: string | string[];
@@ -17,6 +17,8 @@ interface IUser extends Document {
     name: string,
     age: number,
     section: string,
+    email: string,
+    password: string,
     image: Image[],
 }
 
@@ -29,7 +31,7 @@ interface IProduct extends Document {
 }
 
 interface DataType {
-    id: string,
+    id?: string,
     [key: string]: any;
 }
 
@@ -38,7 +40,16 @@ interface DecodeToken {
 }
 
 interface AuthenticatedRequest extends Request {
-    user?: any
+    user?: IUser
+}
+
+interface TokenPayLoad {
+    _id: mongoose.Types.ObjectId;
+}
+
+interface GeneratedToken {
+    token: string,
+    expiresIn: string | number,
 }
 
 export {
@@ -48,5 +59,7 @@ export {
     Image,
     DataType,
     DecodeToken,
-    AuthenticatedRequest
+    AuthenticatedRequest,
+    TokenPayLoad,
+    GeneratedToken
 } 
