@@ -14,18 +14,6 @@ const getUserById = async (req: Request, res: Response) => {
     return !data ? new ErrorHandler('No data found', 404) : SuccessHandler(res, "Data Found", data);
 }
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    upload.array("image")
-    const image = await uploadImage(req.files as Express.Multer.File[], []);
-    const data = await userService.create(
-        {
-            ...req.body,
-            image: image
-        }
-    );
-    return SuccessHandler(res, "Data Created", data);
-}
-
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     upload.array("image")
@@ -58,7 +46,6 @@ const deleteUser = async (req: Request, res: Response) => {
 export default {
     getAllUsers,
     getUserById,
-    createUser,
     updateUser,
     deleteUser
 }
