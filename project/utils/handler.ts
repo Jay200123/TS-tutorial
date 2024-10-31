@@ -21,11 +21,12 @@ class ErrorHandler extends Error {
     }
 }
 
-const SuccessHandler = (res: Response, message: string, details: any) => {
+const SuccessHandler = (res: Response, message: string, details: any, token?: string) => {
     res.status(STATUSCODE.SUCCESS).json({
         success: true,
         message: message,
         details: details,
+        ...(token && { access: token }),
     });
 };
 
