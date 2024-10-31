@@ -4,6 +4,7 @@ export const PATH = {
     EDIT_USER_ID: "/user/edit/:id",
     PRODUCTS: "/products",
     PRODUCT_ID: "/prodcut/:id",
-    EDIT_PRODUCT_ID: "/product/edit/:id"
+    EDIT_PRODUCT_ID: "/product/edit/:id",
+    LOGIN: "/login",
 
 }
