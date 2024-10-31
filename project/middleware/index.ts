@@ -1,1 +1,2 @@
-export * from "./sendToken";
+export * from "./generateToken";
+export * from "./verifyToken";
