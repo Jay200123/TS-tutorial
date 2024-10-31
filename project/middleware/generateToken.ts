@@ -1,11 +1,18 @@
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from 'jsonwebtoken';
+import mongoose from 'mongoose';
+import { TokenPayLoad } from '../interface';
 
-export const generateToken = (Id: string) => {
-    return jwt.sign(
-        Id,
-        process.env.JWT_SECRET,
-        {
-        expiresIn: process.env.TOKEN_EXPIRY
-        }
-    );
+export const generateToken = (
+    payload: TokenPayLoad = {} as TokenPayLoad,
+    expiresIn: string = '1d',
+): string => {
+    const options: SignOptions = { expiresIn };
+
+    const tokenPayload  = {
+        ...payload,
+        _id: payload._id.toString(),    
+    }
+
+    return jwt.sign(tokenPayload, process.env.JWT_SECRET as string, options);
 }
+
