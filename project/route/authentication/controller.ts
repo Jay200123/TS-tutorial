@@ -1,9 +1,21 @@
 import * as userService from "../users/service";
-import { ErrorHandler, SuccessHandler, uploadImage, hashPassword } from "../../utils";
-import { Request, Response, NextFunction, DecodeToken } from "../../interface";
+import {
+    ErrorHandler,
+    SuccessHandler,
+    uploadImage,
+    hashPassword
+} from "../../utils";
+import {
+    Request,
+    Response,
+    NextFunction
+} from "../../interface";
 import bcrypt from "bcrypt";
-import { generateToken, blacklistToken, tokenBlackList } from "../../middleware";
-import jwt from "jsonwebtoken";
+import {
+    generateToken,
+    blacklistToken,
+    expiresToken
+} from "../../middleware";
 import mongoose from "mongoose";
 
 
@@ -39,16 +51,11 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const logout = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.headers['authorization'] || req.headers['authorization'].startsWith('Bearer ')) {
-        throw new ErrorHandler('Unauthorized', 401);
-    }
     const token = req.headers['authorization'].split(' ')[1];
 
     if (token) {
         blacklistToken(token);
-        const decodedToken = jwt.decode(token) as DecodeToken;
-        const tokenExpiry = (decodedToken.exp * 1000) - Date.now();
-        setTimeout(() => tokenBlackList.delete(token), tokenExpiry);
+        expiresToken(token);
     }
 
     return SuccessHandler(res, "Logout Success", []);
