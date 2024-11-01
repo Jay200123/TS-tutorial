@@ -16,6 +16,12 @@ const authRoutes: Route[] = [
         path: PATH.LOGIN,
         middleware: [],
         handler: authController.login
+    },
+    {
+        method: METHOD.GET as keyof Router,
+        path: PATH.LOGOUT,
+        middleware: [],
+        handler: authController.logout,
     }
 ]
 
