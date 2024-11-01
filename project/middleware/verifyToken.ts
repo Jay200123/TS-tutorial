@@ -17,7 +17,7 @@ const verifyToken = async (req: AuthenticatedRequest, res: Response, next: NextF
     }
 
     if (tokenBlackList.has(token)) {
-        return next(new ErrorHandler("Token is no longer valid. Please log in again."));
+        return next(new ErrorHandler("Token Expired, sign in again."));
     }
 
     try {
