@@ -7,13 +7,18 @@ import {
 import * as userService from "../route/users/service";
 import { ErrorHandler } from "../utils";
 import jwt from "jsonwebtoken";
+import { tokenBlackList } from "./blacklistToken";
 
 const verifyToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    if (!req.headers['authorization'] || !req.headers['authorization'].startsWith("Bearer ")) {
-        return next(new ErrorHandler("User must login first"));
-    }
 
     const token = req.headers['authorization'].split(' ')[1];
+    if (!req.headers['authorization'] || !req.headers['authorization'].startsWith('Bearer')) {
+        return next(new ErrorHandler("Authorization header missing"));
+    }
+
+    if (tokenBlackList.has(token)) {
+        return next(new ErrorHandler("Token is no longer valid. Please log in again."));
+    }
 
     try {
         const decode = jwt.verify(token, process.env.JWT_SECRET) as DecodeToken;
