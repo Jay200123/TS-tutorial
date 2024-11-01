@@ -6,5 +6,6 @@ export const PATH = {
     PRODUCT_ID: "/prodcut/:id",
     EDIT_PRODUCT_ID: "/product/edit/:id",
     LOGIN: "/login",
+    LOGOUT:"/logout",
 
 }
