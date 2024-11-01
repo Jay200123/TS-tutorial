@@ -1,5 +1,4 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
-import mongoose from 'mongoose';
 import { TokenPayLoad } from '../interface';
 
 export const generateToken = (
