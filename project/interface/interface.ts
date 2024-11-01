@@ -37,6 +37,7 @@ interface DataType {
 
 interface DecodeToken {
     _id: string;
+    exp: number;
 }
 
 interface AuthenticatedRequest extends Request {
