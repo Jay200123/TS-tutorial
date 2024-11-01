@@ -2,9 +2,11 @@ import { globalEnvironment, connectDB } from "./project/config";
 import { Request, Response } from "./project/interface";
 import mongoose from "mongoose";
 import express from "express";
-import { users, products, auth } from "./project/route";  
+import { users, products, auth } from "./project/route";
 import { upload } from "./project/utils";
-import cookieParser from "cookie-parser"; 
+import cookieParser from "cookie-parser";
+import { errorJson, errorHandler } from "./project/middleware";
+
 
 globalEnvironment();
 connectDB();
@@ -24,6 +26,10 @@ app.use("/api/v1/", auth, users, products);
 app.use((req: Request, res: Response) => {
     res.status(404).send("Not Found");
 });
+
+app.use(errorJson);
+app.use(errorHandler);
+
 
 mongoose.connection.once("open", () => {
     app.listen(process.env.PORT)
