@@ -13,10 +13,11 @@ import {
 import bcrypt from "bcrypt";
 import {
     generateToken,
-    blacklistToken,
-    expiresToken
 } from "../../middleware";
 import mongoose from "mongoose";
+import {
+    generateBlacklist
+} from "../../middleware";
 
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
@@ -50,12 +51,11 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     SuccessHandler(res, "Login Success", data, token);
 }
 
-const logout = (req: Request, res: Response, next: NextFunction) => {
+const logout = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers['authorization'].split(' ')[1];
 
     if (token) {
-        blacklistToken(token);
-        expiresToken(token);
+        await generateBlacklist(token);
     }
 
     return SuccessHandler(res, "Logout Success", []);
