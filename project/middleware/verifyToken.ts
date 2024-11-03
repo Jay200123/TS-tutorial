@@ -7,24 +7,22 @@ import {
 import * as userService from "../route/users/service";
 import { ErrorHandler } from "../utils";
 import jwt from "jsonwebtoken";
-import { tokenBlackList } from "./blacklistToken";
+import { findBlacklist } from "./blacklist";
 
 const verifyToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-
-    const token = req.headers['authorization'].split(' ')[1];
-    if (!req.headers['authorization'] || !req.headers['authorization'].startsWith('Bearer')) {
-        return next(new ErrorHandler("Authorization header missing"));
-    }
-
-    if (tokenBlackList.has(token)) {
-        return next(new ErrorHandler("Token Expired, sign in again."));
-    }
-
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET) as DecodeToken;
+        if (!req.headers['authorization'] || !req.headers['authorization'].startsWith('Bearer ')) {
+            return next(new ErrorHandler("Authorization header missing"));
+        }
+
+        if (findBlacklist(req.headers['authorization'].split(' ')[1])) {
+            return next(new ErrorHandler("User must login first"));
+        }
+
+        const decode = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_SECRET) as DecodeToken;
         req.user = await userService.getById(decode._id);
         next();
-    } catch (err) {
+    } catch (err) { 
         return next(new ErrorHandler("User must login first"));
     }
 }
