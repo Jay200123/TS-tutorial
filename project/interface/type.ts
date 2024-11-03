@@ -13,10 +13,10 @@ type Authenticate = (
     next: NextFunction
 ) => void;
 
-type Route = {
+type Route = {  
     method: keyof Router;
     path?: string;
-    middleware: Authenticate[]
+    middleware?: Authenticate[]
     handler: Middleware;
 }
 
