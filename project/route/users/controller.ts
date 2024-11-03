@@ -1,5 +1,5 @@
 import * as userService from './service';
-import { ErrorHandler, SuccessHandler, upload, uploadImage } from '../../utils';
+import { ErrorHandler, SuccessHandler, uploadImage } from '../../utils';
 import { NextFunction, Request, Response } from '../../interface/index';
 import { cloudinary } from '../../config';
 
@@ -16,7 +16,6 @@ const getUserById = async (req: Request, res: Response) => {
 
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-    upload.array("image")
     const user = await userService.getById(req.params.id)
     const oldImage = Array.isArray(user?.image) ? user.image.map((i) => i?.public_id) : [];
 
@@ -39,7 +38,7 @@ const deleteUser = async (req: Request, res: Response) => {
     await cloudinary.api.delete_resources(userImage)
 
     return !data
-        ? new ErrorHandler('No data found', 404)
+        ? new ErrorHandler('No data found')
         : SuccessHandler(res, "Data Deleted", data);
 }
 
