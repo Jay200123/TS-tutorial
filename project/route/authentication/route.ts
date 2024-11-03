@@ -8,26 +8,23 @@ const authRoutes: Route[] = [
     {
         method: METHOD.POST as keyof Router,
         path: PATH.USERS,
-        middleware: [],
         handler: authController.register
     },
     {
         method: METHOD.POST as keyof Router,
         path: PATH.LOGIN,
-        middleware: [],
         handler: authController.login
     },
     {
         method: METHOD.GET as keyof Router,
         path: PATH.LOGOUT,
-        middleware: [],
         handler: authController.logout,
     }
 ]
 
 authRoutes.forEach((route) => {
-    const { method, path, middleware = [], handler } = route
-    router[method as any](path, middleware, handler)
+    const { method, path,  handler } = route
+    router[method as any](path, handler)
 });
 
 export default router;
