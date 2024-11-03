@@ -40,7 +40,7 @@ const productRoutes: Route[] = [
 
 productRoutes.forEach((route) => {
     const { method, path, middleware = [], handler } = route;
-    router[method as any](path, handler);
+    router[method as any](path, middleware, handler);
 });
 
 export default router;
