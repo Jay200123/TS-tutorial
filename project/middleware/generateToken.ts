@@ -3,7 +3,7 @@ import { TokenPayLoad } from '../interface';
 
 export const generateToken = (
     payload: TokenPayLoad = {} as TokenPayLoad,
-    expiresIn: string = '1d',
+    expiresIn: string = '1h',
 ): string => {
     const options: SignOptions = { expiresIn };
 
